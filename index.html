@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mycopunk Weapon, Resource &amp; Upgrade-Grid Reference</title>
+<style>
+  :root{
+    --bg:#15181d;
+    --panel:#1c2026;
+    --panel-2:#20252c;
+    --border:#2e343c;
+    --text:#dde2e8;
+    --text-dim:#8a929d;
+    --accent:#4f9b8a;
+    --accent-dim:#336557;
+    --primary:#4f9b8a;
+    --heavy:#b0743c;
+    --standard:#8a929d;
+    --rare:#4878a8;
+    --epic:#9a5fc2;
+    --exotic:#c25f5f;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.45;
+  }
+  header{
+    padding:20px 24px 16px;
+    border-bottom:1px solid var(--border);
+  }
+  header h1{
+    margin:0 0 6px;
+    font-size:21px;
+  }
+  header p{
+    margin:0 0 4px;
+    color:var(--text-dim);
+    font-size:14px;
+    max-width:780px;
+  }
+  nav.tabs{
+    display:flex;
+    gap:8px;
+    padding:14px 24px 0;
+    border-bottom:1px solid var(--border);
+    background:var(--panel);
+  }
+  nav.tabs .tab{
+    padding:10px 16px;
+    font-size:13.5px;
+    color:var(--text-dim);
+    cursor:pointer;
+    border-bottom:2px solid transparent;
+    user-select:none;
+  }
+  nav.tabs .tab.active{
+    color:var(--text);
+    border-bottom-color:var(--accent);
+  }
+  section{ display:none; }
+  section.active{ display:block; }
+  .controls{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    padding:16px 24px;
+    border-bottom:1px solid var(--border);
+    background:var(--panel);
+  }
+  input[type="search"]{
+    flex:1;
+    min-width:200px;
+    background:var(--panel-2);
+    border:1px solid var(--border);
+    color:var(--text);
+    padding:8px 10px;
+    border-radius:6px;
+    font-size:14px;
+  }
+  .chip{
+    background:var(--panel-2);
+    border:1px solid var(--border);
+    color:var(--text-dim);
+    padding:7px 12px;
+    border-radius:6px;
+    font-size:13px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .chip.active{
+    color:var(--text);
+    border-color:var(--accent);
+  }
+  .table-wrap{
+    padding:16px 24px 50px;
+    overflow-x:auto;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13.5px;
+  }
+  th, td{
+    text-align:left;
+    padding:8px 10px;
+    border-bottom:1px solid var(--border);
+    vertical-align:top;
+  }
+  th{
+    color:var(--text-dim);
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    position:sticky;
+    top:0;
+    background:var(--bg);
+  }
+  tbody tr:hover{
+    background:var(--panel);
+  }
+  .badge{
+    display:inline-block;
+    font-size:11px;
+    padding:2px 7px;
+    border-radius:4px;
+    border:1px solid currentColor;
+  }
+  .badge.Primary{ color:var(--primary); }
+  .badge.Heavy{ color:var(--heavy); }
+  .badge.Standard{ color:var(--standard); }
+  .badge.Rare{ color:var(--rare); }
+  .badge.Epic{ color:var(--epic); }
+  .badge.Exotic{ color:var(--exotic); }
+  .src-link{
+    color:var(--text-dim);
+    font-size:11px;
+  }
+  .src-link a{ color:var(--text-dim); }
+  .snapshot-note{
+    font-size:12px;
+    color:var(--text-dim);
+    border-left:3px solid var(--border);
+    padding-left:10px;
+    margin:10px 24px;
+    max-width:780px;
+  }
+  .snapshot-note.warn{
+    border-left-color:var(--heavy);
+  }
+  .grid-section{
+    padding:16px 24px 50px;
+    max-width:820px;
+  }
+  .grid-section h2{
+    font-size:16px;
+    margin:20px 0 8px;
+  }
+  .grid-section p{
+    font-size:13.5px;
+    color:var(--text);
+  }
+  .arch-card{
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:10px 14px;
+    margin-bottom:8px;
+    background:var(--panel);
+  }
+  .arch-card .name{
+    font-weight:600;
+    font-size:13.5px;
+  }
+  .arch-card .features{
+    font-size:13px;
+    color:var(--text-dim);
+    margin-top:4px;
+  }
+  footer.sources{
+    padding:16px 24px 60px;
+    border-top:1px solid var(--border);
+    font-size:12px;
+    color:var(--text-dim);
+  }
+  footer.sources a{ color:var(--text-dim); }
+  footer.sources li{ margin-bottom:4px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Mycopunk Weapon, Resource &amp; Upgrade-Grid Reference</h1>
+  <p>Mid mission-select and need the fast answer: how a weapon unlocks, where a resource comes from, or how big an upgrade piece is on the grid.</p>
+</header>
+
+<nav class="tabs">
+  <div class="tab active" data-section="weapons">Weapons (17)</div>
+  <div class="tab" data-section="resources">Resources (7)</div>
+  <div class="tab" data-section="grid">Upgrade Grid</div>
+</nav>
+
+<section id="weapons" class="active">
+  <div class="controls">
+    <input type="search" id="weapon-search" placeholder="Search weapon name, type, or unlock..." />
+    <div class="chip active" data-slot="All">All</div>
+    <div class="chip" data-slot="Primary">Primary</div>
+    <div class="chip" data-slot="Heavy">Heavy</div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Weapon</th>
+          <th>Slot</th>
+          <th>Type</th>
+          <th>Availability</th>
+          <th>How to Unlock</th>
+        </tr>
+      </thead>
+      <tbody id="weapon-rows"></tbody>
+    </table>
+  </div>
+</section>
+
+<section id="resources">
+  <div class="snapshot-note warn">
+    Source dated 2025-07-11, before Mycopunk's 1.0 release. Rarity, descriptions, and how-to-get methods may have changed since. Not an official source.
+  </div>
+  <div class="controls">
+    <input type="search" id="resource-search" placeholder="Search resource name or description..." />
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Resource</th>
+          <th>Rarity</th>
+          <th>Description</th>
+          <th>How to Get</th>
+        </tr>
+      </thead>
+      <tbody id="resource-rows"></tbody>
+    </table>
+  </div>
+</section>
+
+<section id="grid">
+  <div class="grid-section">
+    <h2>Rarity &rarr; Cell Size</h2>
+    <table>
+      <thead><tr><th>Rarity</th><th>Cells</th></tr></thead>
+      <tbody id="grid-rows"></tbody>
+    </table>
+    <p id="grid-standard-note" class="snapshot-note" style="margin-left:0;"></p>
+
+    <h2>Stacking &amp; Expansion</h2>
+    <p id="grid-stacking"></p>
+    <p id="grid-expansion"></p>
+    <p id="grid-placement"></p>
+
+    <h2>Diffraction Driver</h2>
+    <p id="dd-facts"></p>
+    <div id="dd-archetypes"></div>
+  </div>
+</section>
+
+<footer class="sources">
+  Sources &amp; caveats:
+  <ul>
+    <li>Weapons — <a id="src-weapons" href="#" target="_blank" rel="noopener"></a> (re-fetched 2026-11-12)</li>
+    <li>Resources — <a id="src-resources" href="#" target="_blank" rel="noopener"></a> (dated 2025-07-11, pre-1.0 — disclosed above)</li>
+    <li>Upgrade grid &amp; Diffraction Driver — <a id="src-grid" href="#" target="_blank" rel="noopener"></a> (dated 2026-10-21, post-1.0)</li>
+  </ul>
+  <div>No wiki.gg/Fandom page and no web calculator exists for Mycopunk at time of writing — this reference is assembled directly from the three sources above. Blanks are shown as "not published," never invented.</div>
+</footer>
+
+<script src="data.js"></script>
+<script>
+  const weaponRowsEl = document.getElementById("weapon-rows");
+  const weaponSearchEl = document.getElementById("weapon-search");
+  const slotChips = document.querySelectorAll(".chip[data-slot]");
+  let activeSlot = "All";
+
+  function matchesWeaponSearch(w, q) {
+    if (!q) return true;
+    q = q.toLowerCase();
+    return w.name.toLowerCase().includes(q) || w.type.toLowerCase().includes(q) || w.unlock.toLowerCase().includes(q);
+  }
+
+  function renderWeapons() {
+    const q = weaponSearchEl.value.trim();
+    const filtered = WEAPONS.filter(w => (activeSlot === "All" || w.slot === activeSlot) && matchesWeaponSearch(w, q));
+    weaponRowsEl.innerHTML = "";
+    for (const w of filtered) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${w.name}<div class="src-link"><a href="${w.source}" target="_blank" rel="noopener">source</a></div></td>
+        <td><span class="badge ${w.slot}">${w.slot}</span></td>
+        <td>${w.type}</td>
+        <td>${w.availability}</td>
+        <td>${w.unlock}</td>
+      `;
+      weaponRowsEl.appendChild(tr);
+    }
+  }
+
+  weaponSearchEl.addEventListener("input", renderWeapons);
+  slotChips.forEach(chip => {
+    chip.addEventListener("click", () => {
+      slotChips.forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      activeSlot = chip.dataset.slot;
+      renderWeapons();
+    });
+  });
+
+  const resourceRowsEl = document.getElementById("resource-rows");
+  const resourceSearchEl = document.getElementById("resource-search");
+
+  function matchesResourceSearch(r, q) {
+    if (!q) return true;
+    q = q.toLowerCase();
+    return r.name.toLowerCase().includes(q) || r.desc.toLowerCase().includes(q);
+  }
+
+  function renderResources() {
+    const q = resourceSearchEl.value.trim();
+    const filtered = RESOURCES.filter(r => matchesResourceSearch(r, q));
+    resourceRowsEl.innerHTML = "";
+    for (const r of filtered) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${r.name}<div class="src-link"><a href="${r.source}" target="_blank" rel="noopener">source</a></div></td>
+        <td><span class="badge ${r.rarity}">${r.rarity}</span></td>
+        <td>${r.desc}</td>
+        <td>${r.howToGet}</td>
+      `;
+      resourceRowsEl.appendChild(tr);
+    }
+  }
+  resourceSearchEl.addEventListener("input", renderResources);
+
+  function renderGrid() {
+    const gridRowsEl = document.getElementById("grid-rows");
+    gridRowsEl.innerHTML = "";
+    for (const c of UPGRADE_GRID.cellSizes) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td><span class="badge ${c.rarity}">${c.rarity}</span></td><td>${c.cells}${c.note ? ` <span class="src-link">(${c.note})</span>` : ""}</td>`;
+      gridRowsEl.appendChild(tr);
+    }
+    document.getElementById("grid-stacking").textContent = UPGRADE_GRID.stackingRule;
+    document.getElementById("grid-expansion").textContent = UPGRADE_GRID.gridExpansion;
+    document.getElementById("grid-placement").textContent = UPGRADE_GRID.placementNote;
+
+    const dd = UPGRADE_GRID.diffractionDriver;
+    document.getElementById("dd-facts").textContent =
+      `Unlock: ${dd.unlock}. ${dd.upgradeCount} unique upgrades. ${dd.mechanics}`;
+    const archEl = document.getElementById("dd-archetypes");
+    archEl.innerHTML = "";
+    for (const a of dd.archetypes) {
+      const div = document.createElement("div");
+      div.className = "arch-card";
+      div.innerHTML = `<div class="name">${a.name}</div><div class="features">${a.features}</div>`;
+      archEl.appendChild(div);
+    }
+  }
+
+  document.getElementById("grid-standard-note").textContent =
+    "Standard-rarity cell size is not published by the source; everything else above is stated directly.";
+
+  document.getElementById("src-weapons").href = SOURCE_WEAPONS;
+  document.getElementById("src-weapons").textContent = SOURCE_WEAPONS;
+  document.getElementById("src-resources").href = SOURCE_RESOURCES;
+  document.getElementById("src-resources").textContent = SOURCE_RESOURCES;
+  document.getElementById("src-grid").href = SOURCE_UPGRADE_GRID;
+  document.getElementById("src-grid").textContent = SOURCE_UPGRADE_GRID;
+
+  const tabs = document.querySelectorAll(".tab");
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      tabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+      document.getElementById(tab.dataset.section).classList.add("active");
+    });
+  });
+
+  renderWeapons();
+  renderResources();
+  renderGrid();
+</script>
+
+</body>
+</html>
